@@ -1,0 +1,57 @@
+on:
+  pull_request:
+    branches: [main]
+
+  push:
+    branches:
+    - main
+
+  schedule:
+  - cron: '0 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "The reason for running the workflow"
+        required: true
+        default: "Manual run"
+
+name: Semgrep
+
+jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          cancel_others: 'true'
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content_newer
+
+  semgrep:
+    needs: pre_job
+    if: needs.pre_job.outputs.should_skip != 'true'
+    name: Semgrep/CI
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+      # https://github.com/actions/runner/issues/2033#issuecomment-1598547465
+      options: --user 1001
+
+    steps:
+    - name: 'Checkout Repository'
+      uses: actions/checkout@v4.2.2
+    - name: "Check for changed files"
+      uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: .github/filter.yml
+    - name: 'Run Semgrep'
+      if: steps.filter.outputs.code == 'true' || steps.filter.outputs.semgrep == 'true'
+      run: semgrep ci
+      env:
+        SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}

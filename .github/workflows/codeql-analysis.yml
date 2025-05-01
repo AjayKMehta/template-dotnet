@@ -1,0 +1,154 @@
+# https://docs.microsoft.com/en-us/dotnet/devops/dotnet-secure-github-action
+
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+
+  workflow_dispatch:
+
+# https://www.meziantou.net/how-to-cancel-github-workflows-when-pushing-new-commits-on-a-branch.htm
+concurrency:
+  # github.event.pull_request.number || github.ref: pull request number or branch name if not a pull request
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          cancel_others: 'true'
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content_newer
+
+  analyze:
+    needs: pre_job
+    if: needs.pre_job.outputs.should_skip != 'true'
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # required to fetch internal or private CodeQL packs
+      packages: read
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - language: csharp
+          build-mode: manual
+        # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
+        # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
+        # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
+        # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Checkout repository
+        id: checkout_repo
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 2
+
+      - name: "Check for changed files"
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: .github/filter.yml
+
+      - name: Set environment variable
+        id: set-env
+        run: |
+          if [ "${{ steps.filter.outputs.code }}" == "true" ] || [ "${{ steps.filter.outputs.codeql }}" == "true" ]; then
+            echo "ENABLED=1" >> $GITHUB_ENV
+          else
+            echo "ENABLED=0" >> $GITHUB_ENV
+          fi
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        id: init_codeql
+        if: env.ENABLED == '1'
+        uses: github/codeql-action/init@v3.28.13
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          dependency-caching: true
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+      # If the analyze step fails for one of the languages you are analyzing with
+      # "We were unable to automatically build your code", modify the matrix above
+      # to set the build mode to "manual" for that language. Then modify this step
+      # to build your code.
+      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+      - if: matrix.build-mode == 'manual' && env.ENABLED == '1'
+        name: Set up .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+          dotnet-version: '9.0.x'
+
+      - if: matrix.build-mode == 'manual' && env.ENABLED == '1'
+        name: Install dependencies
+        run: |
+          if [[ "${{ github.event.pull_request.user.login }}" == 'dependabot[bot]' ]] || [[ "${{ github.actor }}" == 'dependabot[bot]' ]]; then
+            dotnet restore --force-evaluate && git add .
+          else
+            dotnet restore --locked-mode
+          fi
+
+      - id: commit
+        if: matrix.build-mode == 'manual' && env.ENABLED == '1'
+        uses: qoomon/actions--create-commit@v1
+        with:
+          message: "Committing changes to lock files [skip ci]"
+          allow-empty: false
+          skip-empty: true
+
+      - if: matrix.build-mode == 'manual' && env.ENABLED == '1' && steps.commit.outputs.commit != null
+        run: git push origin ${{ github.head_ref || github.ref_name }}
+
+      - name: Install dependencies
+        if: env.ENABLED == '1' && steps.pr-check.outputs.pr_found == 'false'
+        run: |
+            dotnet restore --locked-mode
+
+      - if: matrix.build-mode == 'manual' && env.ENABLED == '1'
+        name: Build
+        run: dotnet build --configuration Release --no-restore --tl
+
+      - name: Perform CodeQL Analysis
+        if: env.ENABLED == '1'
+        uses: github/codeql-action/analyze@v3.28.13
+        with:
+          category: "/language:${{matrix.language}}"

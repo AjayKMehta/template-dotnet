@@ -1,0 +1,16 @@
+# https://github.com/actions/labeler
+"👷 CICD":
+  - changed-files:
+    - any-glob-to-any-file:
+      - .github/workflows/*
+      - .github/*.yml
+
+"📝 Documentation":
+  - changed-files:
+    - any-glob-to-any-file:
+      - '*.md'
+
+"🧪 Tests":
+  - changed-files:
+    - any-glob-to-any-file:
+      - tests/**/*
