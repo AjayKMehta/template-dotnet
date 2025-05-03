@@ -24,7 +24,6 @@ permissions:
 jobs:
 
   pre_job:
-    # continue-on-error: true # Uncomment once integration is finished
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -136,7 +135,21 @@ jobs:
           skip-empty: true
 
       - if: matrix.build-mode == 'manual' && env.ENABLED == '1' && steps.commit.outputs.commit != null
-        run: git push origin ${{ github.head_ref || github.ref_name }}
+        env:
+          HEAD_REF: ${{ github.head_ref || github.ref_name }}
+        run: git push origin HEAD:$HEAD_REF
+
+      - name: Check if PR for current commit
+        if: env.ENABLED == '1'
+        uses: 8BitJonny/gh-get-current-pr@3.0.0
+        with:
+          # This will work no matter the trigger event and no matter if it is the first PR commit or not.
+          sha: ${{ github.event.pull_request.head.sha }}
+          # By default it returns PRs in any state.
+          filterOutClosed: true
+          # By default it returns PRs in any state.
+          filterOutDraft: true
+        id: pr-check
 
       - name: Install dependencies
         if: env.ENABLED == '1' && steps.pr-check.outputs.pr_found == 'false'
