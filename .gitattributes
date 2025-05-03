@@ -1,0 +1,26 @@
+# Auto detect text files and perform LF normalization
+*          text=auto
+
+*.cs       text diff=csharp
+*.cshtml   text diff=html
+*.csx      text diff=csharp
+*.sln      text eol=crlf
+*.csproj   text eol=crlf
+
+# Docker
+Dockerfile text
+
+# Documentation
+*.markdown text diff=markdown linguist-detectable
+*.md       text diff=markdown linguist-detectable
+
+# VS Code
+.vscode/*.json linguist-language=JSON-with-Comments
+
+# Fixes syntax highlighting on GitHub to allow comments
+.devcontainer.json linguist-language=JSON-with-Comments
+devcontainer.json linguist-language=JSON-with-Comments
+
+*.gitattributes linguist-language=gitattributes
+*.gitattributes linguist-detectable=true
+*.gitattributes linguist-documentation=false
