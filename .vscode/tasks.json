@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary",
+        "-c",
+        "${input:config}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "clean",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "clean",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+  ],
+  "inputs": [
+    {
+      // https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable#pickstringremember
+      "id": "config",
+      "type": "command",
+      "command": "extension.commandvariable.pickStringRemember",
+      "args": {
+        "key": "buildConfig",
+        "addLabelToTop": "${remember:buildConfig}",
+        "default": "Debug",
+        // Directory names are case-sensitive in Linux.
+        "options": [
+          [
+            "Debug",
+            "debug"
+          ],
+          [
+            "Release",
+            "release"
+          ]
+        ],
+        "description": "Build configuration"
+      }
+    }
+  ]
+}
