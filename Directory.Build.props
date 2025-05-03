@@ -1,0 +1,37 @@
+<Project>
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+    <Nullable>Enable</Nullable>
+    <!-- https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output -->
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+    <!-- https://github.com/dotnet/roslyn/issues/37876#issuecomment-738042719 -->
+    <NoWarn>$(NoWarn);CA1014</NoWarn>
+    <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+    <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#enabling-the-lock-file -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- https://github.com/dotnet/reproducible-builds/blob/main/Documentation/Reproducible-MSBuild/Techniques/DisableImplicitNuGetFallbackFolder.md -->
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>high</NuGetAuditLevel>
+  </PropertyGroup>
+  <PropertyGroup Label="NotCI" Condition="'$(CI)' == ''">
+    <!-- https://www.meziantou.net/how-to-output-a-sarif-file-from-a-dotnet-project.htm -->
+    <ErrorLog>$(MSBuildProjectName).sarif,version=2.1</ErrorLog>
+  </PropertyGroup>
+  <!-- GH, CircleCI, GitLab and BitBucket use CI -->
+  <PropertyGroup Label="CI" Condition="'$(CI)' != ''">
+    <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#restore-behavior-with-lock-file -->
+    <RestoreLockedMode>true</RestoreLockedMode>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+</Project>
