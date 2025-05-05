@@ -1,10 +1,14 @@
-# Overview
+## Overview
 
-This repo is a template for creating .NET GitHub repos. To do so, use the `use this template` button.
+This repo is a template for creating .NET GitHub repos. You can do this by clicking the **Use this template** button in the top right corner.
+
+## VS Code
+
+This repo contains `launch.json` and `tasks.json` used to configure  debugging and various tasks. These files makes use of the [Command Variable](https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable) extension to prompt for build configuration (`Release` or `Debug`) and test projects to launch.  
 
 ## CI/CD
 
-There are several GitHub workflows for CI defined. Feel free to modify them as needed.
+There are several GitHub workflows for CI defined. Feel free to modify them as needed. Each workflow runs fairly quickly (in my experience).  You may want to combine some of the workflows, e.g. on pushing to a branch, you may want a single workflow that builds the code, perform SAST, run tests in that order rather than have separate workflows for each task.
 
 ### Workflows
 
@@ -16,7 +20,7 @@ There are several GitHub workflows for CI defined. Feel free to modify them as n
 
 **File**: [codeql-analysis.yml](.github/workflows/codeql-analysis.yml)
 
-##### Dependency Review 📦 
+##### Dependency Review 📦
 
 **Description**: Scans pull requests for dependency changes[^dep], highlighting security vulnerabilities and licensing issues.
 
@@ -38,7 +42,7 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 **Notes**:
 
-> ❗Requires setting up Semgrep account and token stored as `SEMGREP_APP_TOKEN` secret for repository.
+> ❗Requires setting up Semgrep account and saving Semgrep token as `SEMGREP_APP_TOKEN` secret for repository.
 > ℹ️ For more information, please refer to [online help](https://semgrep.dev/docs/deployment/add-semgrep-to-ci).
 
 #### PRs
@@ -67,10 +71,11 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 Automatically updates PR branches when the main branch changes to prevent stale PRs.
 
-**File**: update_pr.yml
+**File**: [update_pr.yml](.github/workflows/update_pr.yml)
 
 **Notes**:
 
+> ❗Requires saving PAT as `ACTION_USER_TOKEN` secret for repository.
 > ℹ️ Requires checks to pass
 > ℹ️ Allows ongoing checks
 
@@ -79,6 +84,8 @@ Automatically updates PR branches when the main branch changes to prevent stale 
 ##### Tests ✅
 
 Runs tests, generates code coverage reports, and uploads code coverage results to [Codecov](https://www.codecov.io/).
+
+**File**: [test.yml](.github/workflows/test.yml)
 
 **Notes**:
 
