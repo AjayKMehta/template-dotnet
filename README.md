@@ -38,16 +38,16 @@ Several of the workflows use the following two GitHub Actions:
 
 2. [`dorny/paths-filter`](https://github.com/dorny/paths-filter): This lets you filter based on path. This is preferable to the builtin [path filters](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore) because they allow more flexibility -- you can use them to conditionally execute steps or jobs whereas the latter only work at the workflow level. One other nice thing is you can look at the step output to see which files were affected if any:
 
-```text
-Run dorny/paths-filter@v3
-Get current git ref
-...
-Detected 2 changed files
-Results:
-Filter code = false
-  Matching files: none
-...
-```
+    ```text
+    Run dorny/paths-filter@v3
+    Get current git ref
+    ...
+    Detected 2 changed files
+    Results:
+    Filter code = false
+    Matching files: none
+    ...
+    ```
 
 ### Workflows
 
