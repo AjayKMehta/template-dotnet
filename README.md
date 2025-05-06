@@ -28,13 +28,26 @@ All build outputs from all projects are saved in `./artifacts/bin`, separated by
 
 ## CI/CD
 
-There are several GitHub workflows for CI defined. Feel free to modify them as needed. Each workflow runs fairly quickly (in my experience).  You may want to combine some of the workflows, e.g. on pushing to a branch, you may want a single workflow that builds the code, perform SAST, run tests in that order rather than have separate workflows for each task.
+There are several GitHub workflows for CI defined. Feel free to modify them as needed.
+
+Although each workflow runs fairly quickly, you may wish to combine some of them into a single workflow, e.g. on pushing to a branch, a single workflow that builds the code, performs SAST and runs tests (in that order) may be desired rather than having separate workflows for each task.
 
 Several of the workflows use the following two GitHub Actions:
 
 1. [`fkirc/skip-duplicate-actions`](https://github.com/fkirc/skip-duplicate-actions/tree/v5/): This prevents duplicate runs of the same workflow. This can happen for example if a workflow is triggered by more than one of the following events: `pull_request`, `push` and `workflow_dispatch`.
 
-2. [`dorny/paths-filter`](https://github.com/dorny/paths-filter)
+2. [`dorny/paths-filter`](https://github.com/dorny/paths-filter): This lets you filter based on path. This is preferable to the builtin [path filters](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore) because they allow more flexibility -- you can use them to conditionally execute steps or jobs whereas the latter only work at the workflow level. One other nice thing is you can look at the step output to see which files were affected if any:
+
+```text
+Run dorny/paths-filter@v3
+Get current git ref
+...
+Detected 2 changed files
+Results:
+Filter code = false
+  Matching files: none
+...
+```
 
 ### Workflows
 
@@ -73,7 +86,7 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 **Notes**:
 
-> ❗Requires setting up Semgrep account and saving Semgrep token as `SEMGREP_APP_TOKEN` secret for repository.
+> ❗Requires setting up Semgrep account and saving Semgrep token as `SEMGREP_APP_TOKEN` secret for repository.<br/>
 > ℹ️ For more information, please refer to [online help](https://semgrep.dev/docs/deployment/add-semgrep-to-ci).
 
 #### PRs
@@ -121,6 +134,7 @@ Runs tests, generates code coverage reports, and uploads code coverage results t
 **Notes**:
 
 > ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`.<br />
+> See [Codecov Tokens](https://docs.codecov.com/docs/codecov-tokens) for more information.<br />
 > ℹ️ Adds coverage summary to PR and workflow runs.
 
 #### Dependency management
