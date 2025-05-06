@@ -48,7 +48,7 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 
 **Notes**:
 
-> ℹ️ See [here](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.
+> ℹ️ See [here](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.<br />
 > ℹ️ There are [3 build modes](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#codeql-build-modes) available: `none`, `autobuild` or `manual`. In the workflow, build mode is set to `manual` but you may wish to change this as needed (see [this](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#building-c)).
 
 ##### *📦 Dependency Review*
@@ -61,8 +61,8 @@ Scans pull requests for dependency changes[^dep], highlighting security vulnerab
 
 **Notes**:
 
->⚠️ Fails PR for high severity vulnerabilities.
->ℹ️ Adds summary to PRs.
+>⚠️ Fails PR for high severity vulnerabilities.<br />
+>ℹ️ Adds summary to PRs.<br />
 >ℹ️ Uses dependency caching.
 
 ##### *🛡️ Semgrep*
@@ -106,9 +106,9 @@ Automatically updates PR branches when the **main** branch changes to prevent st
 
 **Notes**:
 
-> ❗Requires saving PAT as `ACTION_USER_TOKEN` secret for repository.
-> ℹ️ Requires checks to pass
-> ℹ️ Allows ongoing checks
+> ❗Requires saving PAT as `ACTION_USER_TOKEN` secret for repository.<br />
+> ℹ️ Requires checks to pass.<br />
+> ℹ️ Allows ongoing checks.
 
 #### Tests
 
@@ -120,7 +120,7 @@ Runs tests, generates code coverage reports, and uploads code coverage results t
 
 **Notes**:
 
-> ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`.
+> ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`.<br />
 > ℹ️ Adds coverage summary to PR and workflow runs.
 
 #### Dependency management
