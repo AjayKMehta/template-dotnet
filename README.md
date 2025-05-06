@@ -49,6 +49,8 @@ Several of the workflows use the following two GitHub Actions:
     ...
     ```
 
+Some workflows require [creating repository secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) as mentioned below.
+
 ### Workflows
 
 #### Security + Linting
@@ -119,7 +121,7 @@ Automatically updates PR branches when the **main** branch changes to prevent st
 
 **Notes**:
 
-> ❗Requires saving PAT as `ACTION_USER_TOKEN` secret for repository.<br />
+> ❗Requires [saving GitHub app token or personal access token](https://github.com/adRise/update-pr-branch/pull/39) as `ACTION_USER_TOKEN` secret for repository.<br />
 > ℹ️ Requires checks to pass.<br />
 > ℹ️ Allows ongoing checks.
 
@@ -134,7 +136,7 @@ Runs tests, generates code coverage reports, and uploads code coverage results t
 **Notes**:
 
 > ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`.<br />
-> See [Codecov Tokens](https://docs.codecov.com/docs/codecov-tokens) for more information.<br />
+> ℹ️ See [Codecov Tokens](https://docs.codecov.com/docs/codecov-tokens) for more information.<br />
 > ℹ️ Adds coverage summary to PR and workflow runs.
 
 #### Dependency management
