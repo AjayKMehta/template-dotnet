@@ -40,7 +40,7 @@ Several of the workflows use the following two GitHub Actions:
 
 #### Security + Linting
 
-##### CodeQL Analysis 🔍
+##### *🔍 CodeQL Analysis*
 
 Automated code analysis to identify vulnerabilities and coding errors in code.
 
@@ -51,7 +51,7 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 > ℹ️ See [here](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.
 > ℹ️ There are [3 build modes](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#codeql-build-modes) available: `none`, `autobuild` or `manual`. In the workflow, build mode is set to `manual` but you may wish to change this as needed (see [this](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#building-c)).
 
-##### Dependency Review 📦
+##### *📦 Dependency Review*
 
 Scans pull requests for dependency changes[^dep], highlighting security vulnerabilities and licensing issues.
 
@@ -65,7 +65,7 @@ Scans pull requests for dependency changes[^dep], highlighting security vulnerab
 >ℹ️ Adds summary to PRs.
 >ℹ️ Uses dependency caching.
 
-##### Semgrep 🛡️
+##### *🛡️ Semgrep*
 
 Performs static analysis security testing (SAST) to detect security vulnerabilities and bugs.
 
@@ -78,7 +78,7 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 #### PRs
 
-##### Label Merge Conflicts 💥
+##### *💥 Label Merge Conflicts*
 
 Automatically labels PRs that have merge conflicts with `💥 Conflicts` label.
 
@@ -88,7 +88,7 @@ Automatically labels PRs that have merge conflicts with `💥 Conflicts` label.
 
 > ℹ️ Retries up to 5 times with 5 second wait between retries
 
-##### Pull Request Labeler 🏷️
+##### *🏷️ Pull Request Labeler*
 
 Automatically applies labels to pull requests based on the files changed.
 
@@ -98,7 +98,7 @@ Automatically applies labels to pull requests based on the files changed.
 
 > ℹ️ Labels are defined in [this config file](.github\labeler.yml).
 
-##### Update PR 🔄
+##### *🔄 Update PR*
 
 Automatically updates PR branches when the **main** branch changes to prevent stale PRs.
 
@@ -112,7 +112,7 @@ Automatically updates PR branches when the **main** branch changes to prevent st
 
 #### Tests
 
-##### Tests ✅
+##### *✅ Tests*
 
 Runs tests, generates code coverage reports, and uploads code coverage results to [Codecov](https://www.codecov.io/).
 
@@ -125,7 +125,7 @@ Runs tests, generates code coverage reports, and uploads code coverage results t
 
 #### Dependency management
 
-##### Version Sweeper ⬆️
+##### *⬆️ Version Sweeper*
 
 Monthly check for outdated .NET versions and creates automated upgrade PRs.
 
