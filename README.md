@@ -1,6 +1,6 @@
 ## Overview
 
-This repo is a template for creating .NET GitHub repos. You can do this by clicking the **Use this template** button in the top right corner.
+This repo is a template for creating .NET repos. You can do this by clicking the **Use this template** button in the top right corner.
 
 ## git
 
@@ -20,6 +20,12 @@ There is an `.editorconfig` that follows default style and naming rules for the 
 
 `global.json` allows you to define which .NET SDK version is used when you run .NET CLI commands. This is useful so commands use the same SDK version whether run locally or in CI scenarios.
 
+### Layout
+
+It is recommended that you keep the solution file(s) in the root directory, non-test code in `./src`, test code in `./tests`.
+
+All build outputs from all projects are saved in `./artifacts/bin`, separated by project. For more information, see [Artifacts output layout](https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output).
+
 ## CI/CD
 
 There are several GitHub workflows for CI defined. Feel free to modify them as needed. Each workflow runs fairly quickly (in my experience).  You may want to combine some of the workflows, e.g. on pushing to a branch, you may want a single workflow that builds the code, perform SAST, run tests in that order rather than have separate workflows for each task.
@@ -36,7 +42,7 @@ Several of the workflows use the following two GitHub Actions:
 
 ##### CodeQL Analysis 🔍
 
-**Description**: Automated code analysis to identify vulnerabilities and coding errors in code.
+Automated code analysis to identify vulnerabilities and coding errors in code.
 
 **File**: [codeql-analysis.yml](.github/workflows/codeql-analysis.yml)
 
@@ -47,7 +53,7 @@ Several of the workflows use the following two GitHub Actions:
 
 ##### Dependency Review 📦
 
-**Description**: Scans pull requests for dependency changes[^dep], highlighting security vulnerabilities and licensing issues.
+Scans pull requests for dependency changes[^dep], highlighting security vulnerabilities and licensing issues.
 
 [^dep]: Skips if PR is from dependabot.
 
@@ -74,7 +80,7 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 ##### Label Merge Conflicts 💥
 
-**Description**: Automatically labels PRs that have merge conflicts with `💥 Conflicts` label.
+Automatically labels PRs that have merge conflicts with `💥 Conflicts` label.
 
 **File**: [label_merge_conflicts.yml](.github/workflows/label_merge_conflicts.yml)
 
@@ -84,7 +90,7 @@ Performs static analysis security testing (SAST) to detect security vulnerabilit
 
 ##### Pull Request Labeler 🏷️
 
-**Description**: Automatically applies labels to pull requests based on the files changed.
+Automatically applies labels to pull requests based on the files changed.
 
 **File**: [labeler.yml](.github/workflows/labeler.yml)
 
@@ -129,7 +135,7 @@ Monthly check for outdated .NET versions and creates automated upgrade PRs.
 
 | Workflow              | Push | PR | Schedule | Manual |
 |-----------------------|------|----|----------|--------|
-| CodeQL                | ✅    | ✅  | -        | ✅      |
+| CodeQL Analysis       | ✅    | ✅  | -        | ✅      |
 | Dependency Review     | ✅    | ✅  | -        | ✅      |
 | Label Merge Conflicts | ✅    | -  | -        | -      |
 | PR Labeler            | -    | ✅  | -        | -      |
