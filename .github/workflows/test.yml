@@ -128,7 +128,7 @@ jobs:
 
       - name: ReportGenerator
         if: env.ENABLED == '1'
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.5
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.6
         with:
           reports: '**/TestResults/**/coverage.cobertura.xml'
           targetdir: '${{ github.workspace }}/coveragereport'
