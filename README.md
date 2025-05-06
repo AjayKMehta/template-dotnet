@@ -26,6 +26,12 @@ It is recommended that you keep the solution file(s) in the root directory, non-
 
 All build outputs from all projects are saved in `./artifacts/bin`, separated by project. For more information, see [Artifacts output layout](https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output).
 
+## Dependabot
+
+There is a config file for Dependabot to manage dependency updates for Nuget packages, GitHub actions and .NET SDK versions. Please modify as needed.
+
+See [Dependabot options reference](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference) for details about config options.
+
 ## CI/CD
 
 There are several GitHub workflows for CI defined. Feel free to modify them as needed.
