@@ -65,8 +65,8 @@ There are several GitHub workflows for CI defined. Feel free to modify them as n
 
     :point_right: This requires the GItHub CLI app to be installed.
 
-    > ![TIP]
-    > :bulb: If you are in the repo's working directory, you can omit `--repo {UserName}/{Repo}`.
+> [!TIP]
+> :bulb: If you are in the repo's working directory, you can omit `--repo {UserName}/{Repo}`.
 
 ### Workflows
 
