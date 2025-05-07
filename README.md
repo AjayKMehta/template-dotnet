@@ -36,26 +36,37 @@ See [Dependabot options reference](https://docs.github.com/en/code-security/depe
 
 There are several GitHub workflows for CI defined. Feel free to modify them as needed.
 
-Although each workflow runs fairly quickly, you may wish to combine some of them into a single workflow, e.g. on pushing to a branch, a single workflow that builds the code, performs SAST and runs tests (in that order) may be desired rather than having separate workflows for each task.
+- Although each workflow runs fairly quickly, you may wish to combine some of them into a single workflow, e.g. on pushing to a branch, a single workflow that builds the code, performs SAST and runs tests (in that order) may be desired rather than having separate workflows for each task.
 
-Several of the workflows use the following two GitHub Actions:
+- These 2 GitHub Actions are used in some of the workflows:
 
-1. [`fkirc/skip-duplicate-actions`](https://github.com/fkirc/skip-duplicate-actions/tree/v5/): This prevents duplicate runs of the same workflow. This can happen for example if a workflow is triggered by more than one of the following events: `pull_request`, `push` and `workflow_dispatch`.
+    1. [`fkirc/skip-duplicate-actions`](https://github.com/fkirc/skip-duplicate-actions/tree/v5/): This prevents duplicate runs of the same workflow. This can happen for example if a workflow is triggered by more than one of the following events: `pull_request`, `push` and `workflow_dispatch`.
 
-2. [`dorny/paths-filter`](https://github.com/dorny/paths-filter): This lets you filter based on path. This is preferable to the builtin [path filters](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore) because they allow more flexibility -- you can use them to conditionally execute steps or jobs whereas the latter only work at the workflow level. One other nice thing is you can look at the step output to see which files were affected if any:
+    2. [`dorny/paths-filter`](https://github.com/dorny/paths-filter): This lets you filter based on path. This is preferable to the builtin [path filters](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore) because they allow more flexibility -- you can use them to conditionally execute steps or jobs whereas the latter only work at the workflow level. One other nice thing is you can look at the step output to see which files were affected if any:
 
-    ```text
-    Run dorny/paths-filter@v3
-    Get current git ref
-    ...
-    Detected 2 changed files
-    Results:
-    Filter code = false
-    Matching files: none
-    ...
+        ```text
+        Run dorny/paths-filter@v3
+        Get current git ref
+        ...
+        Detected 2 changed files
+        Results:
+        Filter code = false
+        Matching files: none
+        ...
+        ```
+
+- Some workflows require [creating repository secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions).
+
+- Also, some workflows update specific labels. Feel free to edit the labels in the workflows. If you wish to use the ones specified, you can manually create them or better yet, clone them from this repo:
+
+    ```shell
+    gh label clone AjayKMehta/template-dotnet --repo {UserName}/{Repo}
     ```
 
-Some workflows require [creating repository secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) as mentioned below.
+    :point_right: This requires the GItHub CLI app to be installed.
+
+    > ![TIP]
+    > :bulb: If you are in the repo's working directory, you can omit `--repo {UserName}/{Repo}`.
 
 ### Workflows
 
