@@ -8,7 +8,7 @@ Both `.gitattributes` and `.gitignore` are adapted for .NET development.
 
 ## VS Code
 
-This repo contains `launch.json` and `tasks.json` used to configure debugging and other tasks. These files makes use of the [Command Variable](https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable) extension to prompt user for build configuration (`Release` or `Debug`) and which test project to launch.  
+This repo contains `launch.json` and `tasks.json` used to configure debugging and other tasks. These files make use of the [Command Variable](https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable) extension to prompt the user for build configuration (`Release` or `Debug`) as well as which test project to launch.  
 
 ## .NET
 
@@ -16,9 +16,9 @@ There is a `Directory.Build.props` file for common MSBuild properties to avoid c
 
 It is recommended to use centralized package management as provided by `Directory.Packages.props`. If you choose not to do so, you can delete this file.
 
-There is an `.editorconfig` that follows default style and naming rules for the most part.
+There is an `.editorconfig` that follows the default style and naming rules recommended by Microsoft for the most part.
 
-`global.json` allows you to define which .NET SDK version is used when you run .NET CLI commands. This is useful so commands use the same SDK version whether run locally or in CI scenarios.
+[`global.json`](https://learn.microsoft.com/en-us/dotnet/core/tools/global-json) allows you to define which .NET SDK version is used when you run .NET CLI commands. This is useful so commands use the same SDK version whether they run locally or in CI scenarios.
 
 ### Layout
 
@@ -28,11 +28,11 @@ All build outputs from all projects are saved in `./artifacts/bin`, separated by
 
 ## Dependabot
 
-There is a config file for Dependabot to manage dependency updates for Nuget packages, GitHub actions and .NET SDK versions. Please modify as needed.
+There is a config file for Dependabot to manage dependency updates for Nuget packages, GitHub actions and .NET SDK versions. Please modify this file as needed.
 
 See [Dependabot options reference](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference) for details about config options.
 
-## CI/CD
+## CI
 
 There are several GitHub workflows for CI defined. Feel free to modify them as needed.
 
@@ -81,7 +81,7 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 
 **Notes**:
 
-> ℹ️ See [here](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.<br />
+> ℹ️ See [**Customizing your advanced setup for code scanning**](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.<br />
 > ℹ️ There are [3 build modes](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#codeql-build-modes) available: `none`, `autobuild` or `manual`. In the workflow, build mode is set to `manual` but you may wish to change this as needed (see [this](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#building-c)).
 
 ##### 📦 *Dependency Review*
