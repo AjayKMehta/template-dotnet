@@ -1,6 +1,6 @@
 ## Overview
 
-This repo is a template for creating .NET repos. You can do this by clicking the **Use this template** button in the top right corner.
+This repo is a template for creating .NET repos. You can do this by clicking the **Use this template** button in the top right corner. The new repo will have **main** as the default branch.
 
 ## git
 
@@ -35,6 +35,17 @@ See [Dependabot options reference](https://docs.github.com/en/code-security/depe
 ## CI
 
 There are several GitHub workflows for CI defined. Feel free to modify them as needed.
+
+- If you wish to change the default branch from **main**, please update the Github workflows accordingly:
+
+    ```yaml
+    on:
+      push:
+        branches: [main] # Change to new name
+
+      pull_request:
+        branches: [main] # Change to new name
+    ```
 
 - Although each workflow runs fairly quickly, you may wish to combine some of them into a single workflow, e.g. on pushing to a branch, a single workflow that builds the code, performs SAST and runs tests (in that order) may be desired rather than having separate workflows for each task.
 
@@ -82,7 +93,9 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 **Notes**:
 
 > ℹ️ See [**Customizing your advanced setup for code scanning**](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning) for more details.<br />
-> ℹ️ There are [3 build modes](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#codeql-build-modes) available: `none`, `autobuild` or `manual`. In the workflow, build mode is set to `manual` but you may wish to change this as needed (see [this](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#building-c)).
+> ℹ️ There are [3 build modes](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#codeql-build-modes) available: `none`, `autobuild` or `manual`. In the workflow, build mode is set to `manual` but you may wish to change this as needed (see [**Building C#**](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages#building-c)).
+>
+> ❗There are some steps that are a workaround for an issue I have encountered with Dependabot not updating NuGet dependencies properly. You may wish to remove them if they are not applicable or no longer necessary *after testing the workflow without them*.
 
 ##### 📦 *Dependency Review*
 
