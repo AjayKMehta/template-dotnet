@@ -174,7 +174,7 @@ Runs tests, generates code coverage reports, and uploads code coverage results t
 
 ##### ⬆️ *Version Sweeper*
 
-Monthly check for outdated .NET versions and creates automated upgrade PRs.
+Checks monthly for outdated .NET versions and creates automated upgrade PRs if needed.
 
 **File**: [version-sweeper.yml](.github/workflows/version-sweeper.yml)
 
