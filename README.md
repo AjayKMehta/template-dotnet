@@ -138,7 +138,7 @@ Automatically labels PRs that have merge conflicts with `💥 Conflicts` label.
 
 Automatically applies labels to pull requests based on the files changed.
 
-**File**: [labeler.yml](.github/workflows/labeler.yml)
+**File**: [pr_labeler.yml](.github/workflows/pr_labeler.yml)
 
 **Notes**:
 
