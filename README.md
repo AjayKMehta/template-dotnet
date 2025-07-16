@@ -160,7 +160,7 @@ Automatically updates PR branches when the **main** branch changes to prevent st
 
 ##### ✅ *Tests*
 
-Runs tests, generates code coverage reports, and uploads code coverage results to [Codecov](https://www.codecov.io/).
+Runs tests, generates code coverage reports, uploads logs if one or more tests fail and uploads code coverage results to [Codecov](https://www.codecov.io/).
 
 **File**: [test.yml](.github/workflows/test.yml)
 
