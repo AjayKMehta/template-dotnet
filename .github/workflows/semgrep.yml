@@ -8,6 +8,7 @@ on:
 
   schedule:
   - cron: '0 0 * * 0'
+
   workflow_dispatch:
     inputs:
       reason:
@@ -19,7 +20,6 @@ name: Semgrep
 
 jobs:
   pre_job:
-    # continue-on-error: true # Uncomment once integration is finished
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -33,9 +33,9 @@ jobs:
           concurrent_skipping: same_content_newer
 
   semgrep:
+    name: Semgrep/CI
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
-    name: Semgrep/CI
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
@@ -55,7 +55,7 @@ jobs:
 
     - id: run-semgrep
       name: 'Run Semgrep'
-      if: steps.filter.outputs.code == 'true' || steps.filter.outputs.semgrep == 'true'
+      if: steps.filter.outputs.code == 'true' || steps.filter.outputs.workflows == 'true'
       run: semgrep ci
       env:
         SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}

@@ -4,7 +4,7 @@ code:
     - "**/*.props"
 codeql:
     - .github/workflows/codeql-analysis.yml
-semgrep:
-    - .github/workflows/semgrep.yml
 test:
     - .github/workflows/test.yml
+workflows:
+    - .github/workflows/*.yml
