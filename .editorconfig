@@ -72,6 +72,10 @@ indent_style = tab
 exclude = true
 generated_code = true
 
+[{Program.cs,*Tests.cs}]
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
+
 [*.{cs,csx,cake}]
 
 ##########################################
@@ -518,6 +522,9 @@ roslynator_null_conditional_operator_new_line = before
 # RCS0060: Add/remove blank line after file scoped namespace declaration
 roslynator_blank_line_after_file_scoped_namespace_declaration = true
 
+# RCS0063: Remove unnecessary blank line
+roslynator_blank_line_between_closing_brace_and_switch_section = false
+
 # RCS1001: Add braces (when expression spans over multiple lines)
 dotnet_diagnostic.RCS1001.severity = suggestion
 
@@ -658,6 +665,7 @@ dotnet_diagnostic.RCS1248.severity = suggestion
 # RCS1250: Use implicit/explicit object creation
 roslynator_object_creation_type_style = implicit_when_type_is_obvious
 roslynator_use_var_instead_of_implicit_object_creation = true
+roslynator_use_collection_expression = true
 
 # RCS1252: Normalize usage of infinite loop
 roslynator_infinite_loop_style = while
@@ -860,3 +868,6 @@ dotnet_diagnostic.CA2259.severity = error
 
 # CA2260: Implement generic math interfaces correctly
 dotnet_diagnostic.CA2260.severity = error
+
+# CA5394: Do not use insecure randomness
+dotnet_diagnostic.CA5394.severity = none
