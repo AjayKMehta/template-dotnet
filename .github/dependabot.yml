@@ -12,6 +12,11 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 9 * * 7"
+    cooldown:
+      default-days: 5
+      semver-major-days: 20
+      semver-minor-days: 5
+      semver-patch-days: 2
     groups:
       # If a dependency update could belong to more than one group, it is only assigned to the first group it matches with.
       security-updates:
@@ -20,13 +25,6 @@ updates:
           - "major"
           - "minor"
           - "patch"
-
-      major-pkg-updates:
-        applies-to: version-updates
-        exclude-patterns:
-          - "*[Aa]nalyzers*"
-        update-types:
-          - "major"
 
       pkg-updates:
         applies-to: version-updates
@@ -56,6 +54,9 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
+    # Doesn't support SemVer
+    cooldown:
+      default-days: 5
     groups:
       actions-dependencies:
         update-types:
@@ -70,5 +71,10 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 40
+      semver-major-days: 30
+      semver-minor-days: 15
+      semver-patch-days: 10
     labels:
       - "⬆️ Dependencies"
