@@ -68,11 +68,24 @@ indent_size = 2
 [Makefile]
 indent_style = tab
 
-[*.{AssemblyAttributes.cs,AssemblyInfo.cs,generated.cs,g.cs}]
+# Verify settings
+[*.{received,verified}.{json,txt,xml}]
+charset = utf-8-bom
+end_of_line = lf
+indent_size = unset
+indent_style = unset
+insert_final_newline = false
+tab_width = unset
+trim_trailing_whitespace = false
+
+[*.{AssemblyAttributes.cs,AssemblyInfo.cs}]
+exclude = true
+
+[*.{generated.cs,g.cs}]
 exclude = true
 generated_code = true
 
-[{Program.cs,*Tests.cs}]
+[{Program,*Tests,*Controller,*Model,*DbContext,*Dto}.cs]
 # CA1515: Consider making public types internal
 dotnet_diagnostic.CA1515.severity = none
 
@@ -771,6 +784,10 @@ dotnet_diagnostic.CA1311.severity = warning
 
 # CA1501: Avoid excessive inheritance
 dotnet_diagnostic.CA1501.severity = suggestion
+
+CA1515: Consider making public types internal
+dotnet_code_quality.CA1515.output_kind = DynamicallyLinkedLibrary
+dotnet_diagnostic.CA1515.severity = suggestion
 
 ## Naming rules
 # https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/naming-warnings
