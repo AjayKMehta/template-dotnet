@@ -107,6 +107,7 @@ Scans pull requests for dependency changes[^dep], highlighting security vulnerab
 
 **Notes**:
 
+>⚠️ **Only works in public repos or if Advanced Security is enabled for private repos.**
 >⚠️ Fails PR for high severity vulnerabilities.<br />
 >ℹ️ Adds summary to PRs.<br />
 >ℹ️ Uses dependency caching.
