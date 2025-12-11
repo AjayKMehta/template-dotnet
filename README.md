@@ -167,7 +167,7 @@ Runs tests, generates code coverage reports, uploads logs if one or more tests f
 
 **Notes**:
 
-> ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`.<br />
+> ❗Requires CodeCov account and token that is stored in a repository secret called `CODECOV_TOKEN`. If you are using Dependabot, then you also need to create a Dependabot secret called CODECOV_TOKEN.<br />
 > ℹ️ See [Codecov Tokens](https://docs.codecov.com/docs/codecov-tokens) for more information.<br />
 > ℹ️ Adds coverage summary to PR and workflow runs.
 
