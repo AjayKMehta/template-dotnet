@@ -2,7 +2,7 @@ code:
     - "**/*.cs"
     - "**/*.csproj"
     - "**/*.props"
-    - "**/*.sln?(x)"
+    - "**/*.sln(x)?"
 codeql:
     - .github/workflows/codeql-analysis.yml
 test:
