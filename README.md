@@ -97,6 +97,12 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 >
 > ❗There are some steps that are a workaround for an issue I have encountered with Dependabot not updating NuGet dependencies properly. You may wish to remove them if they are not applicable or no longer necessary *after testing the workflow without them*.
 
+##### 🔒 *Detect secrets*
+
+Uses gitleaks GitHub action to identify leaked secrets in code.
+
+**File**: [gitleaks.yml](.github/workflows/gitleaks.yml)
+
 ##### 📦 *Dependency Review*
 
 Scans pull requests for dependency changes[^dep], highlighting security vulnerabilities and licensing issues.
@@ -181,13 +187,14 @@ Checks monthly for outdated .NET versions and creates automated upgrade PRs if n
 
 ### Workflow Triggers
 
-| Workflow              | Push | PR | Schedule | Manual |
-|-----------------------|------|----|----------|--------|
-| CodeQL Analysis       | ✅    | ✅  | -        | ✅      |
-| Dependency Review     | ✅    | ✅  | -        | ✅      |
-| Label Merge Conflicts | ✅    | -  | -        | -      |
-| PR Labeler            | -    | ✅  | -        | -      |
-| Semgrep               | ✅    | ✅  | Weekly   | ✅      |
-| Tests                 | ✅    | ✅  | -        | -      |
-| Update PR             | ✅    | -  | -        | -      |
-| Version Sweeper       | -    | -  | Monthly  | ✅      |
+| Workflow              | Push  | PR - | Schedule | Manual |
+|-----------------------|-------|------|----------|--------|
+| CodeQL Analysis       | ✅    | ✅   | -        | ✅     |
+| Dependency Review     | ✅    | ✅   | -        | ✅     |
+| Detect secrets        | ✅    | ✅   | -        | ✅     |
+| Label Merge Conflicts | ✅    | -    | -        | -      |
+| PR Labeler            | -     | ✅   | -        | -      |
+| Semgrep               | ✅    | ✅   | Weekly   | ✅     |
+| Tests                 | ✅    | ✅   | -        | -      |
+| Update PR             | ✅    | -    | -        | -      |
+| Version Sweeper       | -     | -    | Monthly  | ✅     |
