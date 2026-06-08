@@ -187,14 +187,19 @@ Checks monthly for outdated .NET versions and creates automated upgrade PRs if n
 
 ### Workflow Triggers
 
-| Workflow              | Push  | PR - | Schedule | Manual |
-|-----------------------|-------|------|----------|--------|
-| CodeQL Analysis       | ✅    | ✅   | -        | ✅     |
-| Dependency Review     | ✅    | ✅   | -        | ✅     |
-| Detect secrets        | ✅    | ✅   | -        | ✅     |
-| Label Merge Conflicts | ✅    | -    | -        | -      |
-| PR Labeler            | -     | ✅   | -        | -      |
-| Semgrep               | ✅    | ✅   | Weekly   | ✅     |
-| Tests                 | ✅    | ✅   | -        | -      |
-| Update PR             | ✅    | -    | -        | -      |
-| Version Sweeper       | -     | -    | Monthly  | ✅     |
+| Workflow              | Push | PR - | Schedule | Manual |
+|-----------------------|------|------|----------|--------|
+| CodeQL Analysis       | ✅   | ✅   | -        | ✅     |
+| Dependency Review     | ✅   | ✅   | -        | ✅     |
+| Detect secrets        | ✅   | ✅   | -        | ✅     |
+| Label Merge Conflicts | ✅   | -    | -        | -      |
+| PR Labeler            | -    | ✅   | -        | -      |
+| Semgrep               | ✅   | ✅   | Weekly   | ✅     |
+| Tests                 | ✅   | ✅   | -        | -      |
+| Update PR             | ✅   | -    | -        | -      |
+| Version Sweeper       | -    | -    | Monthly  | ✅     |
+
+### zizmor
+
+[zizmor](https://github.com/zizmorcore/zizmor) is a static analysis tool for GitHub Actions.
+There is a config file for zizmor in `./github`.
