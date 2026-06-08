@@ -48,11 +48,11 @@ jobs:
     steps:
     - id: checkout
       name: 'Checkout Repository'
-      uses: actions/checkout@v6.0.1
+      uses: actions/checkout@v6.0.3
 
     - id: filter
       name: "Check for changed files"
-      uses: dorny/paths-filter@v3
+      uses: dorny/paths-filter@v4
       with:
         filters: .github/filter.yml
 
