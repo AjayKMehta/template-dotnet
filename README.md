@@ -99,9 +99,9 @@ Automated code analysis to identify vulnerabilities and coding errors in code.
 
 ##### 🔒 *Detect secrets*
 
-Uses gitleaks GitHub action to identify leaked secrets in code.
+Uses betterleaks GitHub action to identify leaked secrets in code.
 
-**File**: [gitleaks.yml](.github/workflows/gitleaks.yml)
+**File**: [betterleaks.yml](.github/workflows/betterleaks.yml)
 
 ##### 📦 *Dependency Review*
 
@@ -183,7 +183,7 @@ Runs tests, generates code coverage reports, uploads logs if one or more tests f
 
 Checks monthly for outdated .NET versions and creates automated upgrade PRs if needed.
 
-**File**: [version-sweeper.yml](.github/workflows/version-sweeper.yml)
+**File**: [version_sweeper.yml](.github/workflows/version_sweeper.yml)
 
 ### Workflow Triggers
 
