@@ -2,21 +2,37 @@ name: Update PR
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: [main]
+
+concurrency:
+  # github.event.pull_request.number || github.ref: pull request number or branch name if not a pull request
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CHECK_PERMISSIONS: 0
+
+permissions: {}
+
 jobs:
-  autoupdate:
-    name: Update PR
+  update-pr:
+    name: Update PR branch automatically
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write # Need to update PR
+      pull-requests: write # Need to update PR
     steps:
+      - id: check-permissions
+        name: Check action permissions
+        uses: GitHubSecurityLab/actions-permissions/monitor@bf82d13b9b10051d224345ab9184f5ede0a94289 # v1.0.2-beta9
+        if: env.CHECK_PERMISSIONS == '1'
       - id: update-pr
-        name: Automatically update PR
-        uses: adRise/update-pr-branch@v0.10.2
+        name: Update PR
+        uses: adRise/update-pr-branch@fe3b7082713cc6b51fab6cc16765fa6cbcae8ba4 # v0.11.0
         with:
-          # Add secret here: https://github.com/{owner}/{repo}/settings/secrets/actions
           token: ${{ secrets.ACTION_USER_TOKEN }}
-          base: 'main'
+          base: main
           required_approval_count: 0
           require_passed_checks: true
           require_auto_merge_enabled: false
