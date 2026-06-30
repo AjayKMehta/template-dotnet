@@ -53,9 +53,6 @@ jobs:
     if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
       DOTNET_NOLOGO: true
@@ -224,7 +221,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: env.ENABLED == '1'
         with:
-          name: code-coverage-report-${{ matrix.os }}
+          name: code-coverage-report-ubuntu
           path: |
             **/TestResults/**/*.cobertura.xml
             coveragereport/*.md
