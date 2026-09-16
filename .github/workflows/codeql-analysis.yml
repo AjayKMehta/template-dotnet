@@ -106,7 +106,7 @@ jobs:
       - id: init-codeql
         name: Initialize CodeQL
         if: env.ENABLED == '1'
-        uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        uses: github/codeql-action/init@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
@@ -175,7 +175,7 @@ jobs:
       - id: codeql-analysis
         name: Perform CodeQL Analysis
         if: env.ENABLED == '1'
-        uses: github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        uses: github/codeql-action/analyze@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
         with:
           # yamllint disable-line
           category: "/language:${{matrix.language}}"
